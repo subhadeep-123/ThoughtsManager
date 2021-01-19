@@ -1,8 +1,10 @@
 import database
 import time
-
-USERNAME = input("Enter your Username - ")
-PASSWORD = input("Enter Your Password - ")
+# USERNAME = input("Enter your Username - ")
+# PASSWORD = input("Enter Your Password - ")
+USERNAME = "matri"
+PASSWORD = "iammatrix"
+FLAG = 0
 
 
 def sign_up():
@@ -16,9 +18,13 @@ def log_in():
     if len(USERNAME) != 0 and len(PASSWORD) != 0:
         val = database.check_acc_exists(USERNAME, PASSWORD)
         if val == 1:
-            pass
+            print("You are logged in")
+            return True
+        else:
+            sign_up()
     else:
-        print("Enter Username and Password")
+        print("Enter Username or Password is Incorrect")
+        return False
 
 
 def main():
@@ -35,6 +41,20 @@ def main():
         sign_up()
     elif read == 2:
         log_in()
+    elif read == 3:
+        if log_in() == True:
+            database.read(USERNAME, PASSWORD)
+        else:
+    elif read == 4:
+        var = input("Enter What you wanna Update - ")
+        if var != 'age':
+            new_val = input(f"Enter the new value of {var}")
+        else:
+            new_val = int(input(f"Enter the new value of {var}"))
+        database.update(USERNAME, PASSWORD, var, new_val)
+    elif read == 5:
+        var = input("Enter What you want to Delete - ")
+        # database.delete(var)
     else:
         print("Enter Something Usefule dude!")
 
