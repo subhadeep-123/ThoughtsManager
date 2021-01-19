@@ -1,2 +1,2 @@
 # ThoughtsManager
-A made for practicing MongoDB
+This project is made for praticing mongoDB
