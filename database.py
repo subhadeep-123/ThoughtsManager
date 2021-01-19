@@ -1,13 +1,10 @@
 import pymongo
-
+from pprint import pprint
 CLIENT = pymongo.MongoClient('localhost', 27017)
 FLAG = 0
 
-
-def create_database():
-    db = CLIENT['Thoughts-Manager']
-    collection = db['SomeThoughts']
-    return collection
+db = CLIENT['Thoughts-Manager']
+col = db['SomeThoughts']
 
 
 def toJSON(uname, psswd):
@@ -27,14 +24,12 @@ def toJSON(uname, psswd):
 
 
 def insert_data(data):
-    col = create_database()
     result = col.insert_one(data).inserted_id
     print("Data Inserted")
 
 
 def check_acc_exists(uname, psswd):
-    col = create_database()
-    for account in create_database().find():
+    for account in col.find():
         if account['username'] == uname:
             if account['password'] == psswd:
                 print("Welcome")
@@ -46,17 +41,18 @@ def check_acc_exists(uname, psswd):
     return FLAG
 
 
-def read():
-    pass
+def read(uname, psswd):
+    query = {"username": uname, "password": psswd}
+    pprint(col.find_one(query))
 
 
-def update():
-    pass
+def update(uname, psswd, key, new_val):
+    for account in col.find():
+        if account['username'] == uname and account['password'] == psswd:
+            pprint(account)
+        else:
+            print("No Record Found")
 
 
 def delete():
     pass
-
-
-if __name__ == "__main__":
-    create_database()
